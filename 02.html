@@ -29,11 +29,9 @@
       .append('div')
       .classed('bar', true)
       .style( { height: barHeight } )
-      .html(barHtml)
-    ;
+      .html(barHtml);
 
   function barHeight(d) {
-    console.log(d);
     return (d * 10 + 20) + 'px';
   }
 

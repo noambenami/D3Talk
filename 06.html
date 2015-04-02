@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head lang='en'>
+  <meta charset='UTF-8'>
+  <title>Selections with Data & SVG & Scales & GOOD Path Interpolations</title>
+</head>
+<style>
+  svg {
+    font: 10px sans-serif;
+  }
+
+  .line {
+    fill: none;
+    stroke: #000;
+    stroke-width: 1.5px;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+</style>
+<body>
+
+<script src='vendor/d3.js'></script>
+<script src='scripts/randomStream.js'></script>
+<script>
+
+  var n = 40;
+  var stream = new RandomStream(n, 0.2);
+
+  var margin = { top: 20, right: 20, bottom: 20, left: 40 };
+  var width  = 960 - margin.left - margin.right;
+  var height = 500 - margin.top - margin.bottom;
+
+  var x = d3.scale.linear()
+    .domain([1, n - 2])// 1. Clip the x so that the first and last elements aren't visible! E.g. x(0) will now be < 0
+    .range([0, width]);
+
+  var y = d3.scale.linear()
+    .domain([-1, 1])
+    .range([height, 0]);
+
+  var line = d3.svg.line()
+    .interpolate('basis')// 2. Just for fun
+    .x(function(d, i) { return x(i); })
+    .y(function(d, i) { return y(d); });
+
+  var svg = d3.select('body')
+    .append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+    .append('g')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+  // 3. Clip anything outside the graph using this reusable clip path definition
+  svg.append('defs')
+    .append('clipPath')
+      .attr('id', 'clip')
+    .append('rect')
+      .attr('width', width)
+      .attr('height', height);
+
+  svg.append('g')
+    .attr('class', 'x axis')
+    .attr('transform', 'translate(0,' + y(0) + ')')
+    .call(d3.svg.axis().scale(x).orient('bottom'));
+
+  svg.append('g')
+    .attr('class', 'y axis')
+    .call(d3.svg.axis().scale(y).orient('left'));
+
+  var data = stream.update();
+
+  var path = svg.append('g')
+      .attr('clip-path', 'url(#clip)')
+    .append('path')
+    .datum(data)
+    .attr('class', 'line')
+    .attr('d', line);
+
+  readStream();
+
+  function readStream() {
+
+    data.push(stream.random());
+
+    // redraw the line and transform it so it doesn't jiggle
+    path
+      .attr('d', line)
+      .attr('transform', null)
+      .transition()
+      .duration(500)
+      .ease('linear')
+      .attr('transform', 'translate(' + x(0) + ',0)')
+      .each('end', readStream); // On the transition 'end' event, loop
+
+    data.shift();
+  }
+
+</script>
+</body>
+</html>
