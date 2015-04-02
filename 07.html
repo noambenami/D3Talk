@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head lang='en'>
+  <meta charset='UTF-8'>
+  <title>Basic layout example</title>
+</head>
+<style>
+
+  .node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+
+  .node {
+    font: 10px sans-serif;
+  }
+
+  .link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5px;
+  }
+
+</style>
+<body>
+<script src="vendor/d3.js"></script>
+<script>
+  var data = {
+    "name": "flare",
+    "children": [
+      {
+        "name": "analytics",
+        "children": [
+          {
+            "name": "cluster",
+            "children": [
+              {"name": "AgglomerativeCluster", "size": 3938},
+              {"name": "CommunityStructure", "size": 3812},
+              {"name": "HierarchicalCluster", "size": 6714},
+              {"name": "MergeEdge", "size": 743}
+            ]
+          },
+          {
+            "name": "graph",
+            "children": [
+              {"name": "BetweennessCentrality", "size": 3534},
+              {"name": "LinkDistance", "size": 5731},
+              {"name": "MaxFlowMinCut", "size": 7840},
+              {"name": "ShortestPaths", "size": 5914},
+              {"name": "SpanningTree", "size": 3416}
+            ]
+          },
+          {
+            "name": "optimization",
+            "children": [
+              {"name": "AspectRatioBanker", "size": 7074}
+            ]
+          }
+        ]
+      },
+      {
+        "name": "animate",
+        "children": [
+          {"name": "Easing", "size": 17010},
+          {"name": "FunctionSequence", "size": 5842},
+          {
+            "name": "interpolate",
+            "children": [
+              {"name": "ArrayInterpolator", "size": 1983},
+              {"name": "ColorInterpolator", "size": 2047},
+              {"name": "DateInterpolator", "size": 1375},
+              {"name": "Interpolator", "size": 8746},
+              {"name": "MatrixInterpolator", "size": 2202},
+              {"name": "NumberInterpolator", "size": 1382},
+              {"name": "ObjectInterpolator", "size": 1629},
+              {"name": "PointInterpolator", "size": 1675},
+              {"name": "RectangleInterpolator", "size": 2042}
+            ]
+          },
+          {"name": "ISchedulable", "size": 1041},
+          {"name": "Parallel", "size": 5176},
+          {"name": "Pause", "size": 449},
+          {"name": "Scheduler", "size": 5593},
+          {"name": "Sequence", "size": 5534},
+          {"name": "Transition", "size": 9201},
+          {"name": "Transitioner", "size": 19975},
+          {"name": "TransitionEvent", "size": 1116},
+          {"name": "Tween", "size": 6006}
+        ]
+      },
+      {
+        "name": "data",
+        "children": [
+          {
+            "name": "converters",
+            "children": [
+              {"name": "Converters", "size": 721},
+              {"name": "DelimitedTextConverter", "size": 4294},
+              {"name": "GraphMLConverter", "size": 9800},
+              {"name": "IDataConverter", "size": 1314},
+              {"name": "JSONConverter", "size": 2220}
+            ]
+          },
+          {"name": "DataField", "size": 1759},
+          {"name": "DataSchema", "size": 2165},
+          {"name": "DataSet", "size": 586},
+          {"name": "DataSource", "size": 3331},
+          {"name": "DataTable", "size": 772},
+          {"name": "DataUtil", "size": 3322}
+        ]
+      },
+      {
+        "name": "display",
+        "children": [
+          {"name": "DirtySprite", "size": 8833},
+          {"name": "LineSprite", "size": 1732},
+          {"name": "RectSprite", "size": 3623},
+          {"name": "TextSprite", "size": 10066}
+        ]
+      },
+      {
+        "name": "flex",
+        "children": [
+          {"name": "FlareVis", "size": 4116}
+        ]
+      },
+      {
+        "name": "physics",
+        "children": [
+          {"name": "DragForce", "size": 1082},
+          {"name": "GravityForce", "size": 1336},
+          {"name": "IForce", "size": 319},
+          {"name": "NBodyForce", "size": 10498},
+          {"name": "Particle", "size": 2822},
+          {"name": "Simulation", "size": 9983},
+          {"name": "Spring", "size": 2213},
+          {"name": "SpringForce", "size": 1681}
+        ]
+      },
+      {
+        "name": "query",
+        "children": [
+          {"name": "AggregateExpression", "size": 1616},
+          {"name": "And", "size": 1027},
+          {"name": "Arithmetic", "size": 3891},
+          {"name": "Average", "size": 891},
+          {"name": "BinaryExpression", "size": 2893},
+          {"name": "Comparison", "size": 5103},
+
+          {"name": "Literal", "size": 1214},
+          {"name": "Match", "size": 3748},
+          {"name": "Maximum", "size": 843},
+          {
+            "name": "methods",
+            "children": [
+              {"name": "add", "size": 593},
+              {"name": "and", "size": 330},
+              {"name": "average", "size": 287},
+              {"name": "count", "size": 277},
+              {"name": "distinct", "size": 292},
+              {"name": "div", "size": 595},
+              {"name": "sub", "size": 600},
+              {"name": "sum", "size": 280},
+              {"name": "update", "size": 307},
+              {"name": "variance", "size": 335},
+              {"name": "where", "size": 299},
+              {"name": "xor", "size": 354},
+              {"name": "_", "size": 264}
+            ]
+          },
+          {"name": "Minimum", "size": 843},
+          {"name": "Not", "size": 1554},
+          {"name": "Or", "size": 970},
+          {"name": "Query", "size": 13896},
+          {"name": "Range", "size": 1594},
+          {"name": "StringUtil", "size": 4130},
+          {"name": "Sum", "size": 791},
+          {"name": "Variable", "size": 1124},
+          {"name": "Variance", "size": 1876},
+          {"name": "Xor", "size": 1101}
+        ]
+      }
+    ]
+  };
+
+  var width = 960;
+  var height = 1000;
+
+  // Denodrogram layout: leaf nodes of the tree at the same depth
+  var cluster = d3.layout.cluster()
+    .size([height, width - 160]);
+
+  // Projection reverses x and y, rotating all lines by 90 degrees ccw
+  // to match our
+  var diagonal = d3.svg.diagonal()
+    .projection(function(d) { return [d.y, d.x]; });
+
+  var svg = d3.select('body').append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .append('g')
+    .attr('transform', 'translate(40,0)');
+
+  // Layouts follow the same basic structure: the input argument to the layout is
+  // the root node of the hierarchy, and the output return value is an array
+  // representing the computed positions of all nodes. Several attributes are
+  // populated on each node: { parent, children, depth, x, y }
+  var nodes = cluster.nodes(data);
+  var links = cluster.links(nodes);
+
+  var link = svg.selectAll('.link')
+    .data(links)
+    .enter().append('path')
+    .attr('class', 'link')
+    .attr('d', diagonal); // The magic here is that the enriched path nodes can be passed to our diagonal function.
+
+  // Note the 90 ccw rotation done here as well
+  var node = svg.selectAll('.node')
+    .data(nodes)
+    .enter()
+    .append('g')
+      .attr('class', 'node')
+      .attr('transform', function(d) { return 'translate(' + d.y + ',' + d.x + ')'; });
+
+  node.append('circle')
+    .attr('r', 4.5);
+
+  node.append('text')
+    .attr('dx', function(d) { return d.children ? -8 : 8; })
+    .attr('dy', 3)
+    .style('text-anchor', function(d) { return d.children ? 'end' : 'start'; })
+    .text(function(d) { return d.name; });
+
+  d3.select(self.frameElement)
+    .style('height', height + 'px');
+
+</script>
+</body>
+</html>
