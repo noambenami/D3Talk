@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Selections with Data</title>
+</head>
+<style>
+  .bar {
+    float: left;
+    background-color: lightblue;
+    border: 1pt solid lightseagreen;
+    margin: 1px;
+  }
+</style>
+<body>
+
+<div id="chart" style="position: absolute; top: 45%; left: 45%">
+
+</div>
+
+<script src="vendor/d3.js"></script>
+<script>
+  var data = [ 10, 30, 4, 32, 21, 42, 12, 19, 18 ];
+
+  d3.select('#chart')
+    .selectAll('div')
+    .data(data)
+    .enter()
+      .append('div')
+      .classed('bar', true)
+      .style( { height: barHeight } )
+      .html(barHtml)
+    ;
+
+  function barHeight(d) {
+    console.log(d);
+    return (d * 10 + 20) + 'px';
+  }
+
+  function barHtml(d) {
+    return d > 9 ? d : '&nbsp;' + d;
+  }
+
+</script>
+</body>
+</html>

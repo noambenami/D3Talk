@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Selections with Data & SVG & Transitions</title>
+</head>
+<style>
+  #chart rect {
+    fill: lightblue;
+    stroke: lightseagreen;
+    stroke-width: 1;
+  }
+</style>
+<body>
+
+<svg id="chart" style="position: absolute; top: 10%; left: 40%;">
+
+</svg>
+
+<script src="vendor/d3.js"></script>
+<script src="scripts/randomStream.js"></script>
+<script>
+  // Create the stream
+  var duration = 330;
+  var barWidth = 30;
+  var maxValue = 50;
+  var windowSize = 19;
+  var stream = new RandomStream(windowSize, 50);
+  var height = barHeight(maxValue);
+
+  var chart = d3.select('#chart')
+    .attr({ width: (barWidth + 10) * windowSize, height: height });
+
+  // Read the stream
+  var initialData = stream.update();
+
+  // Set up the initial model:
+  var g = chart.selectAll('g')
+    .data(initialData)
+    .enter()
+      .append('g')
+      .attr( { transform: positionBar });
+
+  var rects = g.append('rect')
+    .attr({ width: barWidth, height: height });
+
+  var text = g.append('text')
+    .attr({ x: barWidth / 4, y: 15 })
+    .text(labelText);
+
+  setInterval(readStream, duration);
+  readStream();
+
+  // Update the bars to match the stream data
+  function readStream() {
+
+    var data = stream.update();
+
+    g.data(data)
+      .transition(duration - 10)
+      .attr( { transform: positionBar });
+
+    // Crossfade the text
+    text
+      .data(data)
+      .text(labelText)
+    ;
+  }
+
+  // Supporting functions
+
+  function positionBar(d, i) {
+    var x = i * (barWidth + 3);
+    var y = height - barHeight(d);
+    return 'translate('+ x + ',' + y + ')';
+  }
+
+  function barHeight(d) {
+    return d * 10 + 20;
+  }
+
+  function labelText(d) {
+    return d;
+  }
+
+</script>
+</body>
+</html>

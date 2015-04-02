@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Selections with Data & SVG</title>
+</head>
+<style>
+  #chart rect {
+    fill: lightblue;
+    stroke: lightseagreen;
+    stroke-width: 1;
+  }
+</style>
+<body>
+
+<svg id="chart" style="position: absolute; top: 10%; left: 40%;">
+
+</svg>
+
+<script src="vendor/d3.js"></script>
+<script>
+  var data = [ 10, 30, 4, 32, 21, 42, 12, 19, 18 ];
+  var barWidth = 30;
+  var height = barHeight(d3.max(data));
+
+  var bar = d3.select('#chart')
+      .attr({ width: (barWidth + 10) * data.length, height: height })
+      .selectAll('g')
+      .data(data)
+      .enter()
+        .append('g')
+        .attr( { transform: positionBar })
+    ;
+
+  bar.append('rect')
+    .attr({ width: barWidth, height: barHeight });
+
+  bar.append('text')
+    .attr({ x: barWidth / 4, y: 15 })
+    .text(labelText);
+
+  function positionBar(d, i) {
+    console.log(d, i);
+    var x = i * (barWidth + 3);
+    var y = height - barHeight(d);
+    return 'translate('+ x + ',' + y + ')';
+  }
+
+  function barHeight(d) {
+    return d * 10 + 20;
+  }
+
+  function labelText(d) {
+    return d;
+  }
+
+</script>
+</body>
+</html>
