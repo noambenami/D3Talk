@@ -19,18 +19,17 @@
 
 <script src="vendor/d3.js"></script>
 <script>
-  var data = [ 10, 30, 4, 32, 21, 42, 12, 19, 18 ];
-  var barWidth = 30;
-  var height = barHeight(d3.max(data));
+  var someNumbers = [ 10, 30, 4, 32, 21, 42, 12, 19, 18 ];
+  var barWidth    = 30;
+  var height      = barHeight(d3.max(someNumbers));
 
   var bar = d3.select('#chart')
-      .attr({ width: (barWidth + 10) * data.length, height: height })
+      .attr({ width: (barWidth + 10) * someNumbers.length, height: height })
       .selectAll('g')
-      .data(data)
+      .data(someNumbers)
       .enter()
         .append('g')
-        .attr( { transform: positionBar })
-    ;
+        .attr( { transform: positionBar });
 
   bar.append('rect')
     .attr({ width: barWidth, height: barHeight });

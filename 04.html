@@ -18,18 +18,18 @@
 </svg>
 
 <script src="vendor/d3.js"></script>
-<script src="scripts/randomStream.js"></script>
+<script src="scripts/simpleStream.js"></script>
 <script>
   // Create the stream
-  var duration = 330;
+  var duration = 550;
   var barWidth = 30;
   var maxValue = 50;
-  var windowSize = 19;
-  var stream = new RandomStream(windowSize, 50);
+  var bars = 19;
+  var stream = new SimpleStream(bars, 50);
   var height = barHeight(maxValue);
 
   var chart = d3.select('#chart')
-    .attr({ width: (barWidth + 10) * windowSize, height: height });
+    .attr({ width: (barWidth + 10) * bars, height: height });
 
   // Read the stream
   var initialData = stream.update();
@@ -57,12 +57,21 @@
     var data = stream.update();
 
     g.data(data)
-      .transition(duration - 10)
-      .attr( { transform: positionBar });
+      .transition(10)
+      .attr({ transform: positionBar });
 
+    // Fun with transitions! Note the use of text.datum and
+    // the various function constructors.
     text
       .data(data)
-      .text(labelText);
+      .transition()
+      .duration(50)
+      .tween('text', function generateInterpolator(d) {
+        var i = d3.interpolateRound(text.datum(), d);
+        return function (t) {
+          this.textContent = i(t);
+        };
+      });
   }
 
   // Supporting functions

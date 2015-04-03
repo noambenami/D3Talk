@@ -20,11 +20,11 @@
 
 <script src="vendor/d3.js"></script>
 <script>
-  var data = [ 10, 30, 4, 32, 21, 42, 12, 19, 18 ];
+  var someNumbers = [ 10, 30, 4, 32, 21, 42, 12, 19, 18 ];
 
   d3.select('#chart')
     .selectAll('div')
-    .data(data)
+    .data(someNumbers)
     .enter()
       .append('div')
       .classed('bar', true)
@@ -36,7 +36,7 @@
   }
 
   function barHtml(d) {
-    return d > 9 ? d : '&nbsp;' + d;
+    return d > 9 ? d : '&nbsp;' + d + '&nbsp;';
   }
 
 </script>
