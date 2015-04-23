@@ -25,11 +25,11 @@
 
   var bar = d3.select('#chart')
       .attr({ width: (barWidth + 10) * someNumbers.length, height: height })
-      .selectAll('g')
+      .selectAll()
       .data(someNumbers)
       .enter()
         .append('g')
-        .attr( { transform: positionBar });
+          .attr( { transform: positionBar });
 
   bar.append('rect')
     .attr({ width: barWidth, height: barHeight });

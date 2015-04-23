@@ -21,12 +21,12 @@
 <script src="scripts/simpleStream.js"></script>
 <script>
   // Create the stream
-  var duration = 550;
-  var barWidth = 30;
-  var maxValue = 50;
-  var bars = 19;
-  var stream = new SimpleStream(bars, 50);
-  var height = barHeight(maxValue);
+  var refreshDataMS = 450;
+  var barWidth      = 30;
+  var maxValue      = 50;
+  var bars          = 19;
+  var stream        = new SimpleStream(bars, 50);
+  var height        = barHeight(maxValue);
 
   var chart = d3.select('#chart')
     .attr({ width: (barWidth + 10) * bars, height: height });
@@ -35,7 +35,7 @@
   var initialData = stream.update();
 
   // Set up the initial model:
-  var g = chart.selectAll('g')
+  var g = chart.selectAll()
     .data(initialData)
     .enter()
       .append('g')
@@ -48,7 +48,7 @@
     .attr({ x: barWidth / 4, y: 15 })
     .text(labelText);
 
-  setInterval(readStream, duration);
+  setInterval(readStream, refreshDataMS);
   readStream();
 
   // Update the bars to match the stream data
@@ -57,7 +57,7 @@
     var data = stream.update();
 
     g.data(data)
-      .transition(10)
+      .transition(1)
       .attr({ transform: positionBar });
 
     // Fun with transitions! Note the use of text.datum and
@@ -65,7 +65,7 @@
     text
       .data(data)
       .transition()
-      .duration(50)
+      .duration(refreshDataMS/2)
       .tween('text', function generateInterpolator(d) {
         var i = d3.interpolateRound(text.datum(), d);
         return function (t) {

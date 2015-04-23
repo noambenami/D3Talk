@@ -23,13 +23,13 @@
   var someNumbers = [ 10, 30, 4, 32, 21, 42, 12, 19, 18 ];
 
   d3.select('#chart')
-    .selectAll('div')
+    .selectAll()
     .data(someNumbers)
     .enter()
       .append('div')
-      .classed('bar', true)
-      .style( { height: barHeight } )
-      .html(barHtml);
+        .classed('bar', true)
+        .style( { height: barHeight } )
+        .html(barHtml);
 
   function barHeight(d) {
     return (d * 10 + 20) + 'px';

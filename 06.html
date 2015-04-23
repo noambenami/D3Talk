@@ -28,7 +28,7 @@
 <script src='scripts/randomStream.js'></script>
 <script>
 
-  var n = 40;
+  var n = 110;
   var stream = new RandomStream(n, 0.2);
 
   var margin = { top: 20, right: 20, bottom: 20, left: 40 };
@@ -92,7 +92,7 @@
       .attr('d', line)
       .attr('transform', null)
       .transition()
-      .duration(500)
+      .duration(222)
       .ease('linear')
       .attr('transform', 'translate(' + x(0) + ',0)')
       .each('end', readStream); // On the transition 'end' event, loop
