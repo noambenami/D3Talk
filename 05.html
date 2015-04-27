@@ -82,7 +82,7 @@
     // redraw the line (with the wrong interpolation)
     path.transition()
       .duration(500)
-      .ease('linear')
+      .ease('bounce')
       .attr('d', line)
       .each('end', readStream); // On the transition 'end' event, loop
 
